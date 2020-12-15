@@ -1,5 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongodb = require('mongodb');
+
+(async () => {
+
+const connectionString = 'mongodb://localhost:27017/';
+
+console.info('Conectando ao banco de dados...');
+
+const client = await mongodb.MongoClient.connect(connectionString, {
+  useUnifiedTopology: true
+});
 
 const app = express();
 
@@ -13,16 +24,8 @@ app.get('/', (req, res) => {
 // Create, Read (All or Single), Update, Delete
 // Criar, Ler (Tudo ou Individual), Atualizar e Remover
 
-const mensagens = [
-  {
-    id: 1,
-    texto: 'Essa é a primeira mensagem'
-  },
-  {
-    id: 2,
-    texto: 'Essa é a segunda mensagem'
-  }
-];
+const db = client.db('ocean_bancodados_15_12_2020');
+const mensagens = db.collection('mensagens');
 
 // [CREATE] - Criar uma mensagem
 app.post('/mensagens', (req, res) => {
@@ -37,8 +40,8 @@ app.post('/mensagens', (req, res) => {
 });
 
 // [READ] All - Ler todas as mensagens
-app.get('/mensagens', (req, res) => {
-  res.send(mensagens.filter(Boolean));
+app.get('/mensagens', async (req, res) => {
+  res.send(await mensagens.find().toArray());
 });
 
 // [READ] Single - Ler apenas uma mensagem
@@ -73,3 +76,5 @@ app.delete('/mensagens/:id', (req, res) => {
 app.listen(3000, () => {
   console.info('Servidor rodando em http://localhost:3000.');
 });
+
+})();
