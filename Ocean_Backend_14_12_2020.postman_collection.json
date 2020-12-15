@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "6b3e9068-6702-443e-9dd0-906e8a365159",
+		"name": "Ocean_Backend_14_12_2020",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ler todas as mensagens",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{API_URL}}/mensagens"
+			},
+			"response": []
+		},
+		{
+			"name": "Ler uma mensagem",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{API_URL}}/mensagens/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Remover uma mensagem",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{API_URL}}/mensagens/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Criar uma mensagem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"texto\": \"Nova mensagem de teste!!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{API_URL}}/mensagens"
+			},
+			"response": []
+		},
+		{
+			"name": "Editar uma mensagem",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"texto\": \"Mensagem editada\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{API_URL}}/mensagens/1"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
