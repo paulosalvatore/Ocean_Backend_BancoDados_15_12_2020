@@ -63,7 +63,7 @@ SELECT * FROM `mensagens` WHERE `id` = 1;
 
 - INSERT (SQL):
 
-```
+```sql
 INSERT INTO `mensagens` (`id`, `texto`) VALUES (NULL, 'Essa é a primeira mensagem');
 ```
 
