@@ -28,13 +28,10 @@ const db = client.db('ocean_bancodados_15_12_2020');
 const mensagens = db.collection('mensagens');
 
 // [CREATE] - Criar uma mensagem
-app.post('/mensagens', (req, res) => {
+app.post('/mensagens', async (req, res) => {
   const mensagem = req.body;
 
-  const id = mensagens.length + 1;
-  mensagem.id = id;
-
-  mensagens.push(mensagem);
+  await mensagens.insertOne(mensagem);
 
   res.send(mensagem);
 });
@@ -45,30 +42,29 @@ app.get('/mensagens', async (req, res) => {
 });
 
 // [READ] Single - Ler apenas uma mensagem
-app.get('/mensagens/:id', (req, res) => {
-  const id = +req.params.id - 1;
+app.get('/mensagens/:id', async (req, res) => {
+  const id = req.params.id;
 
-  const mensagem = mensagens[id];
-
-  res.send(mensagem);
+  res.send(await mensagens.findOne({ _id: mongodb.ObjectId(id) }));
 });
 
 // [UPDATE] - Editar uma mensagem
-app.put('/mensagens/:id', (req, res) => {
-  const id = +req.params.id - 1;
+app.put('/mensagens/:id', async (req, res) => {
+  const id = req.params.id;
 
-  const novoTexto = req.body.texto;
-
-  mensagens[id] = novoTexto;
+  await mensagens.updateOne(
+    { _id: mongodb.ObjectId(id) },
+    { $set: req.body }
+  );
 
   res.send('Mensagem editada com sucesso!');
 });
 
 // [DELETE] - Remover uma mensagem
-app.delete('/mensagens/:id', (req, res) => {
-  const id = +req.params.id - 1;
+app.delete('/mensagens/:id', async (req, res) => {
+  const id = req.params.id;
 
-  delete mensagens[id];
+  await mensagens.deleteOne({ _id: mongodb.ObjectId(id) });
 
   res.send('Mensagem foi excluída com sucesso!');
 });
